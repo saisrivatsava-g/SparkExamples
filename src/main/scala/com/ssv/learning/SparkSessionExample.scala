@@ -12,7 +12,7 @@ object SparkSessionExample extends App {
   val resPath = "../spark_programs/resources/"
 
   //loading CSV file using SCHEMA
-  val inputFile = sc.textFile(resPath + "PoliceDataSmall.csv").cache()
+  val inputFile = sc.textFile(resPath + "PoliceData.csv").cache()
   val header = inputFile.first()
   import org.apache.spark.sql.types._
   val fields = header.split(",").map(field => StructField(field, StringType, false))
@@ -27,7 +27,7 @@ object SparkSessionExample extends App {
   val dataTable = dataDf.createOrReplaceTempView("policeData")
   
   //querrying table
-  val mondayData = spark.sql("select IncidntNum, Category, DayOfWeek from policeData WHERE DayOfWeek == \"Saturday\" ")
+  val mondayData = spark.sql("select IncidntNum, Category, DayOfWeek from policeData WHERE DayOfWeek == \"Monday\" ")
   
   //mondayData.show(10)
   println(mondayData.count())
